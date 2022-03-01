@@ -1,3 +1,5 @@
+# 2022 Baltazarus
+
 import sys
 import tkinter as tk
 import tkinter.messagebox as messagebox
