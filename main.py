@@ -79,20 +79,30 @@ class Application:
 
     def Open(self):
         self.current_path = filedialog.askopenfilename(filetypes=self.ffilters)
-        f = open(self.current_path, "r")
-        text_content = f.read()
-        self.widget_main_text.delete("1.0", tk.END)
-        self.widget_main_text.insert("1.0", text_content, tk.END)
-        f.close()
-    
+        if(len(self.current_path) < 1):
+                return;
+        try:
+            f = open(self.current_path, "r")
+            text_content = f.read()
+            self.widget_main_text.delete("1.0", tk.END)
+            self.widget_main_text.insert("1.0", text_content, tk.END)
+            f.close()
+        except Exception as e:
+            print(e)
+            return;
+        
     def Save(self):
-        if len(self.current_path) < 1 or self.b_save_as:
-            self.current_path = filedialog.asksaveasfilename(filetypes=self.ffilters)
-            self.b_save_as = False
-        f = open(self.current_path, "w")
-        f.write(self.widget_main_text.get("1.0", tk.END))
-        f.close()
-
+        try:
+            if len(self.current_path) < 1 or self.b_save_as:
+                self.current_path = filedialog.asksaveasfilename(filetypes=self.ffilters)
+                self.b_save_as = False
+            f = open(self.current_path, "w")
+            f.write(self.widget_main_text.get("1.0", tk.END))
+            f.close()
+        except Exception as e:
+            print(e)
+            return;
+        
     def SaveAs(self):
         self.b_save_as = True
         self.Save()
